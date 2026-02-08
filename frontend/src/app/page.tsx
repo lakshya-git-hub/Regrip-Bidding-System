@@ -14,7 +14,7 @@ export default function Home() {
   const [mounted, setMounted] = useState(false);
   const [email, setEmail] = useState('dealer1@example.com');
   const [password, setPassword] = useState('password123');
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<'ADMIN' | 'DEALER' | null>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -24,7 +24,7 @@ export default function Home() {
 
   // Mock registration and login for quick demo setup
   const handleQuickStart = async (role: 'ADMIN' | 'DEALER') => {
-    setLoading(true);
+    setLoading(role);
     try {
       // Try to register first (ignore error if exists)
       try {
@@ -43,7 +43,7 @@ export default function Home() {
     } catch (error) {
       toast.error('Connection failed. Make sure backend is running.');
     } finally {
-      setLoading(false);
+      setLoading(null);
     }
   };
 
@@ -96,11 +96,11 @@ export default function Home() {
           <div className="grid grid-cols-2 gap-4 mt-8">
             <button
               onClick={() => handleQuickStart('DEALER')}
-              disabled={loading}
+              disabled={!!loading}
               className="bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-bold transition-all disabled:opacity-50 shadow-sm flex items-center justify-center gap-2"
               suppressHydrationWarning
             >
-              {loading ? (
+              {loading === 'DEALER' ? (
                 <>
                   <Loader2 className="w-4 h-4 animate-spin" />
                   <span>Connecting...</span>
@@ -111,11 +111,11 @@ export default function Home() {
             </button>
             <button
               onClick={() => handleQuickStart('ADMIN')}
-              disabled={loading}
+              disabled={!!loading}
               className="bg-slate-800 hover:bg-slate-900 text-white py-3 rounded-xl font-bold transition-all disabled:opacity-50 shadow-sm flex items-center justify-center gap-2"
               suppressHydrationWarning
             >
-              {loading ? (
+              {loading === 'ADMIN' ? (
                 <>
                   <Loader2 className="w-4 h-4 animate-spin" />
                   <span>Connecting...</span>
