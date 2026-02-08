@@ -5,6 +5,7 @@ import DealerDashboard from '@/components/DealerDashboard';
 import { useAuthStore } from '@/lib/store';
 import axios from 'axios';
 import { Toaster, toast } from 'react-hot-toast';
+import { Loader2 } from 'lucide-react';
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000';
 
@@ -96,18 +97,32 @@ export default function Home() {
             <button
               onClick={() => handleQuickStart('DEALER')}
               disabled={loading}
-              className="bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-bold transition-all disabled:opacity-50 shadow-sm"
+              className="bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-bold transition-all disabled:opacity-50 shadow-sm flex items-center justify-center gap-2"
               suppressHydrationWarning
             >
-              Dealer Login
+              {loading ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  <span>Connecting...</span>
+                </>
+              ) : (
+                'Dealer Login'
+              )}
             </button>
             <button
               onClick={() => handleQuickStart('ADMIN')}
               disabled={loading}
-              className="bg-slate-800 hover:bg-slate-900 text-white py-3 rounded-xl font-bold transition-all disabled:opacity-50 shadow-sm"
+              className="bg-slate-800 hover:bg-slate-900 text-white py-3 rounded-xl font-bold transition-all disabled:opacity-50 shadow-sm flex items-center justify-center gap-2"
               suppressHydrationWarning
             >
-              Admin Login
+              {loading ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  <span>Connecting...</span>
+                </>
+              ) : (
+                'Admin Login'
+              )}
             </button>
           </div>
         </div>
