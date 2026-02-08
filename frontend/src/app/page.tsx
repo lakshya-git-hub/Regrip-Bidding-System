@@ -30,7 +30,7 @@ export default function Home() {
         await axios.post(`${API_URL}/api/auth/register`, {
           email,
           password,
-          name: role === 'ADMIN' ? 'Admin User' : 'Dealer John',
+          name: role === 'ADMIN' ? 'Admin User' : (email.split('@')[0].charAt(0).toUpperCase() + email.split('@')[0].slice(1)),
           role
         });
       } catch (e) { }
