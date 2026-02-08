@@ -31,8 +31,10 @@ export default function DealerDashboard() {
 
     const formatBidderName = (name: string | null | undefined) => {
         if (!name) return 'None';
-        if (name.includes('@')) {
-            return name.split('@')[0];
+        // Fail-safe: If the name is the hardcoded default, or looks like it, use email logic
+        if (name === 'Dealer John' || name === 'Admin User' || name.includes('@')) {
+            const emailPart = name.includes('@') ? name : user?.email || name;
+            return emailPart.split('@')[0].charAt(0).toUpperCase() + emailPart.split('@')[0].slice(1);
         }
         return name;
     };
@@ -147,7 +149,7 @@ export default function DealerDashboard() {
                         <span className="text-slate-400 text-xs font-bold uppercase tracking-wider block mb-1">Authenticated</span>
                         <div className="font-bold text-slate-800 flex items-center gap-2">
                             <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                            {user?.name || user?.email}
+                            {formatBidderName(user?.name)}
                         </div>
                     </div>
                 </header>
